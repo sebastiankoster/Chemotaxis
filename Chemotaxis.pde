@@ -199,7 +199,7 @@ if(gameStart){
 loop();
 lost = false;
 gameStart = false;
-
+counter = 3;
 //resetting positions and rotation of all figures
 bob.My = 750;
 bob.Mx = sWidth/2;
