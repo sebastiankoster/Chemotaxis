@@ -83,7 +83,7 @@ int spawnFreq = 10; //seconds b/w sparn *10
 float handy; // for storing random numbers
 boolean lost;
 boolean gameStart = true;
-int score = 2;
+int score = 0;
 int dumCount = 0;
 
 void draw(){
@@ -143,6 +143,8 @@ if (keyPressed) {
     if(abs((swarm[i].Mx)-bob.Mx)<25 && abs((swarm[i].My)-bob.My)<25){
      lost = true;
      handy = dumCount;
+     if (swarm[i].special){
+     ;}
      redraw();
      }
     
@@ -206,6 +208,7 @@ bob.Mx = sWidth/2;
 bob.theta = PI/2;
 Zombie[] temp2= {new Zombie(sWidth/4,250,PI/2,zombsped,false),new Zombie(sWidth/2,250,PI/2,zombsped,false),new Zombie(3*sWidth/4,250,PI/2,zombsped,false)};
 swarm = temp2;
+score = 0;
 
 }
 if (lost){
