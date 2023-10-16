@@ -186,7 +186,7 @@ if (counter%(10*spawnFreq)==0){
    score ++;
    if ((score-3)%10==0){ //creating a "special" zombie every ten spawns with rgb coloring
      swarm[swarm.length-1].special = true;
-     swarm[swarm.length-1].speed = zombsped*1.2;
+     swarm[swarm.length-1].speed = zombsped*1.15;   // "special" zombies are 15% faster
    }
 }
 
@@ -217,9 +217,4 @@ if(gameStart){
 if (lost){
   redraw();
   }
-}
-
-void keyPressed(){
-  if (key == 'i')
-    score++;
 }
