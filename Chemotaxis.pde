@@ -75,7 +75,7 @@ class Zombie
  }
 }
 
-Human bob = new Human(500,750,PI/2.5,6,1.0);
+Human bob = new Human(sWidth/2,750,PI/2.5,6,1.0);
 float zombsped = 2.5;
 int counter = 0;
 Zombie[] swarm= {new Zombie(sWidth/4,250,PI/2,zombsped,false),new Zombie(sWidth/2,250,PI/2,zombsped,false),new Zombie(3*sWidth/4,250,PI/2,zombsped,false)};
@@ -118,7 +118,6 @@ if (keyPressed) {
   
   bob.show(); //render human
 
-  
   //per zombie loop
   for (int i = 0; i<swarm.length;i++){
     if((counter+i)%10==0){
@@ -137,7 +136,6 @@ if (keyPressed) {
         swarm[i].theta = PI + atan((swarm[i].My-bob.My)/(swarm[i].Mx-bob.Mx));
       }
     }
-    
     
     //check for loss
     if(abs((swarm[i].Mx)-bob.Mx)<25 && abs((swarm[i].My)-bob.My)<25){
@@ -162,6 +160,8 @@ if (keyPressed) {
         swarm[i].moved = true;
       }
     }
+    
+    //second half of for loop, to not include the zombie 'i' itself
     for (int j = i+1; j<swarm.length;j++){
       if(abs((swarm[i].Mx)-swarm[j].Mx)<25 && abs((swarm[i].My)-swarm[j].My)<25){
         handy = random(2*PI);
@@ -186,9 +186,11 @@ if (counter%(10*spawnFreq)==0){
    score ++;
    if ((score-3)%10==0){ //creating a "special" zombie every ten spawns with rgb coloring
      swarm[swarm.length-1].special = true;
+     swarm[swarm.length-1].speed = zombsped*1.2;
    }
 }
-//reenables forced correction every .15 seconds: not tied to corrections, though
+
+//reenables forced correction every .15 seconds: not tied to corrections, but clock time
   if (counter%15==0){
     for(int i = 0; i<swarm.length; i++)
     swarm[i].moved = false;
@@ -196,22 +198,28 @@ if (counter%(10*spawnFreq)==0){
   }
 }
 
+
 void mousePressed(){
 if(gameStart){
-loop();
-lost = false;
-gameStart = false;
-counter = 3;
-//resetting positions and rotation of all figures
-bob.My = 750;
-bob.Mx = sWidth/2;
-bob.theta = PI/2;
-Zombie[] temp2= {new Zombie(sWidth/4,250,PI/2,zombsped,false),new Zombie(sWidth/2,250,PI/2,zombsped,false),new Zombie(3*sWidth/4,250,PI/2,zombsped,false)};
-swarm = temp2;
-score = 0;
-
+  loop();
+  //resetting global game variables
+  lost = false;
+  gameStart = false;
+  counter = 3;
+  //resetting positions and rotation of all figures
+  bob.My = 750;
+  bob.Mx = sWidth/2;
+  bob.theta = PI/2;
+  Zombie[] temp2= {new Zombie(sWidth/4,250,PI/2,zombsped,false),new Zombie(sWidth/2,250,PI/2,zombsped,false),new Zombie(3*sWidth/4,250,PI/2,zombsped,false)};
+  swarm = temp2;
+  score = 0;
 }
 if (lost){
   redraw();
   }
+}
+
+void keyPressed(){
+  if (key == 'i')
+    score++;
 }
